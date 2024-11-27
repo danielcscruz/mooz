@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="section-title text-center">
+        <h1>{{ album.album_nome }}</h1>
+        <p>{{ album.album_data }}</p>
+        <p>{{ album.album_local }}</p>
+        <br><br>
+    </div>
+
+    <div class="row">
+        <h2>Fotos do Álbum</h2>
+        {% for foto in fotos %}
+            <div class="col-xs-18 col-sm-6 col-md-3">
+                <div class="thumbnail">
+                    <img src="{{ foto.image.url }}" alt="Foto do Álbum" class="img-fluid">
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

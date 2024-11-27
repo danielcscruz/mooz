@@ -102,9 +102,9 @@ DATABASES = {
        # 'ENGINE': 'django.db.backends.sqlite3',
        # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mydb2',  # Nome do banco de dados criado
+        'NAME': 'mydb4',  # Nome do banco de dados criado
         'USER': 'dan',  # Nome do usuário criado
-        'PASSWORD': 'Zer011',  # Senha do usuário
+        'PASSWORD': 'zero11',  # Senha do usuário
         'HOST': 'localhost',  # Host do banco (localhost para desenvolvimento)
         'PORT': '5432',  # Porta padrão do PostgreSQL
 

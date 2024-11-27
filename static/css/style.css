@@ -2337,4 +2337,26 @@ input[type=email]:focus, input[type=password]:focus, input[type=text]:focus, inp
   font-size: 20px;
   color: #555;
 }
-/*# sourceMappingURL=style.css.map */
+/*# MEUS CSS */
+.custom-pagination .page-link {
+  background-color: #000; /* Fundo preto */
+  color: #fff; /* Texto branco */
+  border: 1px solid #000; /* Borda preta */
+  border-radius: 0; /* Bordas quadradas */
+  padding: 10px 15px; /* Ajuste o tamanho dos botões */
+  margin: 0 2px; /* Espaçamento entre botões */
+  text-decoration: none; /* Remove o sublinhado */
+  display: inline-block;
+}
+
+.custom-pagination .page-link:hover {
+  background-color: #000000; /* Fundo cinza escuro ao passar o mouse */
+  color: #fff; /* Texto branco permanece */
+}
+
+.custom-pagination .active .page-link {
+  background-color: #fff; /* Fundo branco para a página ativa */
+  color: #000; /* Texto preto para a página ativa */
+  border: 1px solid #000; /* Borda preta */
+  font-weight: bold; /* Destaca o botão ativo */
+}
