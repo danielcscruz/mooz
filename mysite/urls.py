@@ -16,14 +16,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from home import views
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', include('home.urls')),
-    #path('eventos/', include('eventos.urls')),
-    #path('fotografos/', include('fotografos.urls')),
-    #path('sobre/', include('sobre.urls')),
     path('', include('home.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),  # Adiciona URLs de autenticação
+    path('accounts/', include('allauth.urls')),
+    path('albums/', include('albumz.urls')),
 ]
+
+if settings.DEBUG:  # Esta linha é importante para garantir que isso só aconteça em desenvolvimento.
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+	
+<h1>Listagem de Álbuns</h1>
+<div>
+    {% for album in albums %}
+        <h2>{{ album.album_nome }}</h2>
+        <p>Data: {{ album.album_data }}</p>
+        <p>Local: {{ album.album_local }}</p>
+        <div>
+            <h3>Fotos:</h3>
+            {% if album.fotos.all %}
+                <ul>
+                    {% for foto in album.fotos.all %}
+                        <li>
+                            <img src="{{ foto.imagem.url }}" alt="{{ foto.foto_desc }}" style="max-width: 200px;">
+                            <p>{{ foto.foto_desc }}</p>
+                            <p>Data: {{ foto.foto_data }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Nenhuma foto disponível neste álbum.</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
+
+    
+{% endblock %}

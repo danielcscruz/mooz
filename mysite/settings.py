@@ -31,13 +31,21 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'home.apps.HomeConfig',
+    'home',
+    'albumz',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
+ 
 ]
 
 MIDDLEWARE = [
@@ -48,6 +56,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #allauth
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -63,10 +73,23 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
             ],
         },
     },
 ]
+
+# allauuth
+AUTHENTICATION_BACKENDS = [
+    
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+    
+]
+
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
@@ -79,8 +102,8 @@ DATABASES = {
        # 'ENGINE': 'django.db.backends.sqlite3',
        # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mydb',  # Nome do banco de dados criado
-        'USER': 'zandurc',  # Nome do usuário criado
+        'NAME': 'mydb2',  # Nome do banco de dados criado
+        'USER': 'dan',  # Nome do usuário criado
         'PASSWORD': 'Zer011',  # Senha do usuário
         'HOST': 'localhost',  # Host do banco (localhost para desenvolvimento)
         'PORT': '5432',  # Porta padrão do PostgreSQL
@@ -137,3 +160,29 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Configuração para autenticação e login
 LOGIN_REDIRECT_URL = '/'  # Redireciona o usuário para a página inicial após o login
 LOGOUT_REDIRECT_URL = '/'  # Redireciona o usuário para a página inicial após o logout
+
+# Configuração do backend para mensagens
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
+#allauth Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '123',
+            'secret': '456',
+            'key': ''
+        }
+    }
+}
+
+ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_EMAIL_REQUIRED = False
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+AUTH_USER_MODEL = 'home.CustomUser'  # substitua 'app_name' pelo nome do seu app

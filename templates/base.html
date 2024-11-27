@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 
 <html lang="pt">
@@ -7,7 +8,7 @@
   <!-- Basic Page Needs
   ================================================== -->
   <meta charset="utf-8">
-  <title>mooz</title>
+  <title>ZUM | Fotos</title>
 
   <!-- Mobile Specific Metas
   ================================================== -->
@@ -57,7 +58,7 @@
 								font-family="AustinBold, Austin" font-weight="bold">
 								<g id="Group" transform="translate(-108.000000, -297.000000)" fill="#000000">
 									<text id="AVIATO">
-										<tspan x="108.94" y="325">MOOZ</tspan>
+										<tspan x="108.94" y="325">ZUM</tspan>
 									</text>
 								</g>
 							</g>
@@ -66,75 +67,64 @@
 				</div>
 			</div>
 			<div class="col-md-4 col-xs-12 col-sm-4">
-				<!-- Cart -->
+				
 				<ul class="top-menu text-right list-inline">
-
-						<a href="" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"><i
-								class="tf-ion-android-cart"></i> Carrinho</a>
-
-					<!-- Search -->
-					<li class="dropdown search dropdown-slide">
-						{% if is_authenticated %}
-                            <a href="" ><i class="tf-ion-ios-person-outline"></i> {{ user.username }}</a>
-                            <a href="{% url 'logout' %}">Logout</a>
+					<a href="" ><i class="tf-ion-android-cart"></i> carrinho</a>
+                    <li class="dropdown search dropdown-slide">
+						{% if user.is_authenticated %}
+                            <a href="../profile/" ><i class="tf-ion-ios-person"></i> {{ user.username }}</a>
+                            {% url 'account_logout' as logout_url_ %}
+                            <a href="{{ logout_url_ }}">sair</a>
                             {% else %}
-                            <a href="/accounts/login/" ><i class="tf-ion-ios-person-outline"></i> Entrar </a>
-                            {% endif %}
-                        
-  
-
-					</li><!-- / Search -->
-
+                            {% url 'account_login' as login_url_ %}
+                            <a href="{{ login_url_ }}" ><i class="tf-ion-ios-person-outline"></i> entrar </a>
+                            {% endif %}                 
+                            </ul>
+                        </div>
+					</li>
 				</ul><!-- / .nav .navbar-nav .navbar-right -->
 			</div>
 		</div>
 	</div>
 </section><!-- End Top Header Bar -->
-
-
 <!-- Main Menu Section -->
 <section class="menu">
 	<nav class="navbar navigation">
 		<div class="container">
-			<div class="navbar-header">
-				<h2 class="menu-title">Main Menu</h2>
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-					aria-expanded="false" aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-
-			</div><!-- / .navbar-header -->
-
 			<!-- Navbar Links -->
 			<div id="navbar" class="navbar-collapse collapse text-center">
 				<ul class="nav navbar-nav">
-
-	
 					<li class="dropdown ">
-						<a href="/eventos">Eventos</a>
+						<a href="/eventos">eventos</a>
 					</li>
 					<li class="dropdown ">
-						<a href="/fotografos">Fotografos</a>
+						<a href="/fotografos">fotografos</a>
 					</li>
 					<li class="dropdown ">
-						<a href="/sobre">Sobre Nós</a>
+						<a href="/sobre">sobre nós</a>
 					</li>
-
 				</ul><!-- / .nav .navbar-nav -->
-
 			</div>
 			<!--/.navbar-collapse -->
 		</div><!-- / .container -->
 	</nav>
 </section>
-
 <main>
-	{% block content %}
-	
-	{% endblock %}
+    {% block body %}
+            {% if messages %}
+                <div class="alert alert-info">
+                    
+                    <ul>
+                        {% for message in messages %}<li>{{ message }}</li>{% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            
+            {% block content %}
+            {% endblock content %}
+        {% endblock body %}
+        {% block extra_body %}
+        {% endblock extra_body %}
 </main>
 
 
