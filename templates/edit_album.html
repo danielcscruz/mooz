@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="section-title text-center">
+        <h1>{{ album.album_nome }}</h1>
+        <p>{{ album.album_data }}</p>
+        <p>{{ album.album_local }}</p>
+        <br><br>
+    </div>
+    <h1>Editar Álbum</h1>
+    
+    <form method="POST">
+        {% csrf_token %}
+        <label for="title">Título:</label>
+        <input type="text" id="title" name="title" value="{{ album.title }}" required>
+        
+        <label for="description">Descrição:</label>
+        <textarea id="description" name="description" required>{{ album.description }}</textarea>
+        
+        <button type="submit">Salvar</button>
+    </form>
+
+    <form id="my-dropzone" class="dropzone" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+    </form>
+    
+    
+    <a href="{% url 'album_list' %}">Voltar para a lista</a>
+    <div class="pagination-wrapper text-center">
+        <nav aria-label="Page navigation">
+            <ul class="pagination custom-pagination">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                        &laquo;
+                    </a>
+                </li>
+                {% endif %}
+                {% for page_num in page_obj.paginator.page_range %}
+                <li class="page-item {% if page_num == page_obj.number %}active{% endif %}">
+                    <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+                </li>
+                {% endfor %}
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                        &raquo;
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    
+    <div class="row">
+        {% for foto in page_obj %}
+        <div class="col-xs-18 col-sm-6 col-md-3">
+            <div class="thumbnail">
+                <img src="{{ foto.imagem.url }}" alt="{{ foto.imagem.name }}" style="max-width: 100%; height: auto;">
+                <div class="caption">
+                    <small>Fotógrafo: {{ foto.fotografo }}</small>               
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+<script>
+    Dropzone.autoDiscover = false;  // Desativa a detecção automática
+    var myDropzone = new Dropzone("#my-dropzone", {
+        url: "{% url 'upload_fotos' album.album_cod %}",  // URL para onde as imagens serão enviadas
+        paramName: "image",  // Nome do campo no qual as imagens serão enviadas
+        maxFiles: 5,  // Limite de 5 arquivos
+        maxFilesize: 2,  // Limite de 2MB por arquivo
+        acceptedFiles: "image/*",  // Apenas imagens
+        addRemoveLinks: true,  // Adicionar links para remover arquivos
+        dictDefaultMessage: "Arraste as imagens aqui ou clique para selecionar",  // Mensagem padrão
+    });
+</script>
+
+
+{% endblock %}

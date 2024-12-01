@@ -39,7 +39,11 @@
                         <h4>{{ album.album_nome }}</h4>
                         <p>{{ album.album_data }}</p>
                         <p>{{ album.album_local }}</p>
-                        <a href="{% url 'album_detail' album.id %}" class="btn btn-main btn-small">ver</a>
+                            <p></p>
+                        <a href="{% url 'album_detail' album.album_cod %}" class="btn btn-main btn-small">ver</a>
+                        {% if request.user in album.edit_permissions.all %}
+                        <a href="{% url 'edit_album' album.album_cod %}" class="btn btn-main btn-small">Editar</a>
+                    {% endif %}
                     </div>
                 </div>
             </div>
