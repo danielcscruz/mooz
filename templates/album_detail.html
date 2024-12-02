@@ -5,6 +5,7 @@
         <h1>{{ album.album_nome }}</h1>
         <p>{{ album.album_data }}</p>
         <p>{{ album.album_local }}</p>
+        <p><a href="{% url 'album_list' %}" class="btn btn-main btn-small">Voltar</a></p>
         <br><br>
     </div>
 
@@ -33,25 +34,20 @@
             </ul>
         </nav>
     </div>
-    
+
     <div class="row">
         {% for foto in page_obj %}
         <div class="col-xs-18 col-sm-6 col-md-3">
             <div class="thumbnail">
+                <!-- Exibir a miniatura da imagem -->
                 <img src="{{ foto.imagem.url }}" alt="{{ foto.imagem.name }}" style="max-width: 100%; height: auto;">
                 <div class="caption">
-                    <small>Fotógrafo: {{ foto.fotografo }}</small>               
+                    <small>Fotógrafo: {{ foto.fotografo }}</small>
                 </div>
             </div>
         </div>
         {% endfor %}
     </div>
-    
 
-
-
-
-
-
-
+</div>
 {% endblock %}

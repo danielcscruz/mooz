@@ -2,8 +2,15 @@
 {% load static %}
 {% block content %}
 <div class="container">
+    {% if request.user.is_authenticated and request.user.is_photographer %}
+<div class="text-right mb-3">
+   <center> <a href="{% url 'new_album' %}" class="btn btn-main btn-small">Criar Novo Álbum</a></center>
+</div>
+{% endif %}
+
     <div class="container bootstrap snippets bootdey">
          <!-- Controles de Paginação -->
+          
     <div class="pagination-wrapper text-center">
         <nav aria-label="Page navigation">
             <ul class="pagination custom-pagination">
@@ -34,11 +41,16 @@
             {% for album in albums %}
             <div class="col-xs-18 col-sm-6 col-md-3">
                 <div class="thumbnail">
-                    <img src="{% static 'img/000000.png' %}">
+                    {% if album.album_cover %}
+                    <img src="{{ album.album_cover.url }}" alt="Capa do Álbum">
+                {% else %}
+                    <img src="{% static 'img/000000.png' %}" alt="Capa Padrão">
+                {% endif %}
                     <div class="caption">
                         <h4>{{ album.album_nome }}</h4>
                         <p>{{ album.album_data }}</p>
                         <p>{{ album.album_local }}</p>
+                        <p><small>{{ album.fotos.count }} fotos</small></p>
                             <p></p>
                         <a href="{% url 'album_detail' album.album_cod %}" class="btn btn-main btn-small">ver</a>
                         {% if request.user in album.edit_permissions.all %}

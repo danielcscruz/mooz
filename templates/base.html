@@ -22,6 +22,10 @@
   <link rel="stylesheet" href="{% static 'plugins/themefisher-font/style.css' %}">
   <link rel="stylesheet" href="{% static 'plugins/bootstrap/css/bootstrap.min.css' %}">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <!-- Incluindo as bibliotecas do Dropzone -->
+    <link rel="stylesheet" href="{% static 'css/dropzone.min.css' %}">
+    <script src="{% static 'js/dropzone.min.js' %}"></script>
 </head>
 
 <body id="body">
@@ -120,7 +124,7 @@
         <div class="col-md-12">
           <ul class="social-media">
             <li>
-              <a href="https://www.instagram.com/themefisher">
+              <a href="https://www.instagram.com/danccruz">
                 <i class="tf-ion-social-instagram"></i>
               </a>
             </li>
@@ -137,13 +141,31 @@
   </footer>
 
   <!-- Essential Scripts -->
+  <script src="{% static 'js/script.js' %}"></script>
+
+  {% block extra_js %}
   <script src="{% static 'plugins/jquery/dist/jquery.min.js' %}"></script>
   <script src="{% static 'plugins/bootstrap/js/bootstrap.min.js' %}"></script>
-  <script src="{% static 'js/script.js' %}"></script>
-  <!-- Incluindo as bibliotecas do Dropzone -->
-  <link rel="stylesheet" href="{% static 'css/dropzone.min.css' %}">
-  <script src="{% static 'js/dropzone.min.js' %}"></script>
-
+  
+  <script>
+      $(document).ready(function() {
+          // Script para carregar a imagem no modal ao clicar na miniatura
+          $('.open-image-modal').on('click', function (event) {
+              var imageUrl = $(this).data('image');  // Obtém a URL da imagem da miniatura
+              $('#globalImageModal').find('#modalImage').attr('src', imageUrl);  // Atualiza a imagem no modal
+          });
+  
+          // Quando o modal for fechado, limpar a imagem
+          $('#globalImageModal').on('hidden.bs.modal', function () {
+              $(this).find('#modalImage').attr('src', '');  // Limpa o src da imagem para evitar problemas ao reabrir
+          });
+  
+          // Verificar se o jQuery e Bootstrap estão carregados corretamente
+          console.log("jQuery e Bootstrap carregados com sucesso.");
+      });
+  </script>
+  {% endblock %}
+  
 </body>
 
 </html>

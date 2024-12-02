@@ -7,4 +7,7 @@ class CustomUser(AbstractUser):
     profile_picture = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
     # Outros campos adicionais
     phone_number = models.CharField(max_length=15, null=True, blank=True)
+    is_photographer = models.BooleanField(default=False)
+    
+
 

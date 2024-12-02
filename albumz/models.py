@@ -13,7 +13,9 @@ class Album(models.Model):
     album_cod = models.CharField(max_length=6, unique=True, editable=False, default=generate_album_cod)
     album_nome = models.CharField(max_length=200)
     album_data = models.DateField("date published")
+    album_desc = models.CharField(max_length=200, blank=True )
     album_local = models.CharField(max_length=200)
+    album_cover = models.ImageField(upload_to='album_covers/', null=True, blank=True)
     edit_permissions = models.ManyToManyField(
         CustomUser,
         related_name="editable_albums",
@@ -39,7 +41,7 @@ def foto_upload_path(instance, filename):
     
 class Foto(models.Model):
     imagem = models.ImageField(upload_to=foto_upload_path)
-    fotografo = models.ForeignKey(Fotografo, on_delete=models.CASCADE)
+    fotografo = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name="fotos")
     foto_id = models.PositiveIntegerField(editable=False)
    

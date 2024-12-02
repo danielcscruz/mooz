@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="section-title text-center">
+        <h1>{{ album.album_nome }}</h1>
+        <p>{{ album.album_data }}</p>
+        <p>{{ album.album_local }}</p>
+        <p><a href="{% url 'edit_album' album_cod=album.album_cod%}" class="btn btn-main btn-small"> Voltar</a></p>
+    </div>
+
+
+    <div class="col-md-6 col-md-offset-3">
+        <div class="block text-center">
+            <form method="POST" id="my-dropzone" class="dropzone" enctype="multipart/form-data">
+                {% csrf_token %}
+    
+                <center> Nome do album</center>
+                <p>
+                    <input id="description" name="title" value="{{ album.album_nome }}">{{ album.title }}</input>
+                </p>
+                
+                <center> Local</center>
+                <p>
+                    <input id="description" name="local" value="{{ album.album_local }}">{{ album.local }}</input>
+                </p>
+                <center>Detalhes</center>
+                <p>
+                    <input id="description" name="desc" value="{{ album.album_desc }}">{{ album.description }}</input>
+                </p>
+                <center> Data de publicação</center>
+                <p>
+                <input type="date" id="date" name="date" value="{{ album.album_data }}">
+                </p><br>
+                <center> Capa do album</center>
+                <p>
+                <center><input type="file" id="cover_image" name="cover" accept="image/*"></center>
+                </p>
+                <br>
+                <br>
+                <button type="submit" class="btn btn-main btn-small">Salvar</button>
+                <br>
+            </form>
+            <br><br>
+
+            <form method="POST" id="my-dropzone"  enctype="multipart/form-data" action="">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-main btn-small" data-bs-toggle="modal" data-bs-target="#deleteModal">Excluir Álbum</button>
+            </form>
+        </div>
+    </div>
+
+<!-- Modal de confirmação -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirmar Exclusão</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Tem certeza de que deseja excluir o álbum "{{ album.album_nome }}"? Esta ação não pode ser desfeita.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <!-- Formulário para confirmar a exclusão -->
+                <form method="POST" action="{% url 'delete_album' album.album_cod %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Excluir</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

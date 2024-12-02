@@ -308,3 +308,7 @@
     border-right:6px solid transparent;
     border-bottom:6px solid #b10606
 }/*# sourceMappingURL=dropzone.css.map */
+
+#my-dropzone .dz-message {
+    display: block !important;
+}

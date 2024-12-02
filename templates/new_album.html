@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="section-title text-center">
+       
+        <p><a href="{% url 'album_list' %}" class="btn btn-main btn-small"> Voltar</a></p>
+    </div>
+
+
+    <div class="col-md-6 col-md-offset-3">
+        <div class="block text-center">
+            <form method="POST" id="my-dropzone" class="dropzone" enctype="multipart/form-data">
+                {% csrf_token %}
+    
+                <center> Nome do album</center>
+                <p>
+                    <input id="description" name="title" required placeholder="Nome do Albúm">{{ album.title }}</input>
+                </p>
+                
+                <center> Local</center>
+                <p>
+                    <input id="description" name="local" required placeholder="Local">{{ album.local }}</input>
+                </p>
+                <center>Detalhes</center>
+                <p>
+                    <input id="description" name="desc" required placeholder="Detalhes">{{ album.description }}</input>
+                </p>
+                <center> Data de publicação</center>
+                <p>
+                <input type="date" id="date" name="date" required placeholder="Escolha uma data">
+                </p><br>
+                <center> Capa do album</center>
+                <p>
+                <center><input type="file" id="cover_image" name="cover" accept="image/*"></center>
+                </p>
+                <br>
+                <br>
+                <button type="submit" class="btn btn-main btn-small">Salvar</button>
+            </form>
+        </div>
+    </div>
+
+    <br><br><br>
+
+
+{% endblock %}
