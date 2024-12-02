@@ -43,7 +43,7 @@
             </form>
             <br><br>
 
-            <form method="POST" id="my-dropzone"  enctype="multipart/form-data" action="">
+            <form method="POST" id="my-dropzone"  enctype="multipart/form-data" action="{% url 'delete_album' album.album_cod %}">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-main btn-small" data-bs-toggle="modal" data-bs-target="#deleteModal">Excluir Álbum</button>
             </form>

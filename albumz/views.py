@@ -5,6 +5,7 @@ from django.http import HttpResponseForbidden, JsonResponse
 from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from cart.models import CartItem
 
 # def album_list(request):
 #    albums = Album.objects.prefetch_related('fotos').all()  # Carrega álbuns e fotos associadas
@@ -21,18 +22,23 @@ def album_list(request):
     return render(request, 'album_list.html', {'albums': page_albums})
 
 def album_detail(request, album_cod):
+    # Obter o álbum e suas fotos
     album = get_object_or_404(Album, album_cod=album_cod)
-    fotos = album.fotos.all()  # Acessa as fotos relacionadas ao álbum
+    fotos = album.fotos.all()
 
-    # Configurando a paginação
-    paginator = Paginator(fotos, 12)  # Exibe 10 fotos por página
-    page_number = request.GET.get('page')  # Obtém o número da página da query string
-    page_obj = paginator.get_page(page_number)
+    # Obter os IDs das fotos no carrinho do usuário logado
+    cart = request.user.carts.first()
+    cart_item_ids = []
+    if cart:
+        cart_item_ids = list(cart.items.values_list('photo_id', flat=True))  # IDs das fotos no carrinho
 
-    return render(request, 'album_detail.html', {
+    context = {
         'album': album,
-        'page_obj': page_obj,  # Passa o objeto da página para o template
-    })
+        'page_obj': fotos,  # Fotos paginadas ou não
+        'cart_item_ids': cart_item_ids,
+    }
+    return render(request, 'album_detail.html', context)
+
 
 def edit_album(request, album_cod):
     album = get_object_or_404(Album, album_cod=album_cod)

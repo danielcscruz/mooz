@@ -28,6 +28,7 @@ urlpatterns = [
     path('', include('home.urls')),
     path('accounts/', include('allauth.urls')),
     path('albums/', include('albumz.urls')),
+    path('cart/', include('cart.urls')),
 ]
 
 if settings.DEBUG:  # Esta linha é importante para garantir que isso só aconteça em desenvolvimento.

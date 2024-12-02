@@ -16,6 +16,12 @@ class Album(models.Model):
     album_desc = models.CharField(max_length=200, blank=True )
     album_local = models.CharField(max_length=200)
     album_cover = models.ImageField(upload_to='album_covers/', null=True, blank=True)
+    album_valor = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank= True)
+    usar_senha = models.BooleanField(default=False)
+    usar_link = models.BooleanField(default=False)
+    senha = models.CharField(max_length=10, null=True, blank= True)
+    link = models.CharField(max_length=10, null=True, blank= True)
+    
     edit_permissions = models.ManyToManyField(
         CustomUser,
         related_name="editable_albums",
@@ -23,14 +29,7 @@ class Album(models.Model):
     )
     def __str__(self):
         return self.album_nome
-
-class Fotografo(models.Model):
-    fotografo_nome = models.CharField(max_length=200)
-    fotografo_email = models.CharField(max_length=200)
-    fotografo_data_nasc = models.DateField("date birth")
-    fotografo_data_ingr = models.DateField("date joined")
-    def __str__(self):
-        return self.fotografo_nome
+    
 
 def foto_upload_path(instance, filename):
     # Gera o nome do arquivo sem tentar acessar o album_cod diretamente

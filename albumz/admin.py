@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Foto, Fotografo, Album
+from .models import Foto, Album
 
 
 class AlbumAdmin(admin.ModelAdmin):
@@ -7,14 +7,13 @@ class AlbumAdmin(admin.ModelAdmin):
     readonly_fields = ['album_cod']
     
     # Outras configurações do Admin
-    list_display = ('id','album_cod', 'album_nome', 'album_data', 'album_local')
+    list_display = ('id','album_cod', 'album_nome', 'album_valor', 'album_data', 'album_local')
     search_fields = ('album_cod', 'album_nome')
     filter_horizontal = ("edit_permissions",)  # Interface amigável para gerenciar permissões
 
 # Registra o modelo com a configuração personalizada
 admin.site.register(Album, AlbumAdmin)
 
-admin.site.register(Fotografo)
 
 @admin.register(Foto)
 class FotoAdmin(admin.ModelAdmin):

@@ -36,17 +36,36 @@
     </div>
 
     <div class="row">
+       
         {% for foto in page_obj %}
-        <div class="col-xs-18 col-sm-6 col-md-3">
-            <div class="thumbnail">
-                <!-- Exibir a miniatura da imagem -->
-                <img src="{{ foto.imagem.url }}" alt="{{ foto.imagem.name }}" style="max-width: 100%; height: auto;">
-                <div class="caption">
-                    <small>Fotógrafo: {{ foto.fotografo }}</small>
+            <div class="col-xs-18 col-sm-6 col-md-3">
+                <div class="thumbnail">
+                    <img src="{{ foto.imagem.url }}" alt="{{ foto.imagem.name }}" style="max-width: 100%; height: auto;">
+                    <div class="caption">
+                        <small>Fotógrafo: {{ foto.fotografo }}</small>
+                        <br>
+                        R$ {{ foto.album.album_valor|floatformat:2 }}
+                        <br><br>
+                        {% if foto.id in cart_item_ids %}
+                        <!-- Botão para remover item do carrinho -->
+                        <form method="POST" action="{% url 'remove_from_cart' foto.id %}?next={{ request.path }}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-small">Remover do Carrinho</button>
+                        </form>
+                        {% else %}
+                        <!-- Botão para adicionar item ao carrinho -->
+                        <form method="POST" action="{% url 'add_to_cart' foto.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success btn-small">Adicionar ao Carrinho</button>
+                        </form>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-        </div>
         {% endfor %}
+
+        
+
     </div>
 
 </div>
