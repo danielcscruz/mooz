@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-(f9vwmu-vb&i3=wq9gq-r_ouy192t1sc_p(j9l&lv_r6&^itg!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'albumz',
     'cart',
     'django.contrib.admin',
+    'django.contrib.sites',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -43,9 +44,6 @@ INSTALLED_APPS = [
     #allauth
     'allauth',
     'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.facebook',
  
 ]
 
@@ -169,25 +167,31 @@ LOGOUT_REDIRECT_URL = '/'  # Redireciona o usuário para a página inicial após
 # Configuração do backend para mensagens
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
-#allauth Provider specific settings
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        # For each OAuth based provider, either add a ``SocialApp``
-        # (``socialaccount`` app) containing the required client
-        # credentials, or list them here:
-        'APP': {
-            'client_id': '123',
-            'secret': '456',
-            'key': ''
-        }
-    }
-}
 
-ACCOUNT_EMAIL_VERIFICATION = "none"
-ACCOUNT_EMAIL_REQUIRED = False
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_LOGIN_BY_CODE_ENABLED = True
+ACCOUNT_AUTHENTICATED_REDIRECT_URL = '/'  # URL para redirecionamento após login bem-sucedido
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True  # Exigir a confirmação da senha ao criar uma conta
+ACCOUNT_AUTHENTICATION_METHOD = 'email'  # Ou 'email' se o login for por email
+ACCOUNT_USERNAME_REQUIRED = True
+
+ACCOUNT_EMAIL_CONFIRMATION_HMAC = False
+ACCOUNT_EMAIL_CONFIRMATION_URL = "http://127.0.0.1:8000"
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 AUTH_USER_MODEL = 'home.CustomUser'  # substitua 'app_name' pelo nome do seu app
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'apikey'  # Literalmente 'apikey' (não o seu nome de usuário)
+EMAIL_HOST_PASSWORD = ''  # Insira aqui a API Key do SendGrid
+DEFAULT_FROM_EMAIL = 'contato@clicado.com.br'  # Substitua pelo e-mail autenticado no SendGrid
+
+SITE_ID = 1  # O valor padrão da configuração, se não foi alterado

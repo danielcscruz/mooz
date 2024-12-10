@@ -121,24 +121,49 @@ input[type=email]:focus, input[type=password]:focus, input[type=text]:focus, inp
 }
 
 .btn-main, .btn-small, .btn-transparent, .btn-solid-border {
-  background: #000;
-  color: #fff;
-  display: inline-block;
-  font-size: 11px;
-  letter-spacing: 1px;
-  padding: 14px 35px;
-  text-transform: uppercase;
-  font-weight: 200;
-  border-radius: 0;
+  background: #000; !important;
+  border: 1px solid #000; !important;/* Borda preta */
+  color: #fff; !important;
+  display: inline-block; !important;
+  font-size: 11px; !important;
+  letter-spacing: 1px; !important;
+  padding: 14px 35px; !important;
+  text-transform: uppercase; !important;
+  font-weight: 200; !important;
+  border-radius: 0; !important;
 }
 .btn-main.btn-icon i, .btn-icon.btn-small i, .btn-icon.btn-transparent i, .btn-icon.btn-solid-border i {
-  font-size: 16px;
-  vertical-align: middle;
-  margin-right: 5px;
+  font-size: 16px; !important;
+  vertical-align: middle; !important;
+  margin-right: 5px; !important;
 }
 .btn-main:hover, .btn-small:hover, .btn-transparent:hover, .btn-solid-border:hover {
-  background: black;
-  color: #fff;
+  background: #ffffff; !important;
+  color: #000; !important;
+  border: 1px solid #000; !important;/* Borda preta */
+}
+
+.btn-small {
+  padding: 8px 25px; !important;
+  font-size: 10px; !important;
+}
+
+.btn-white {
+  background: #fff; !important;/* Fundo branco */
+  color: #000; !important;/* Texto preto */
+  border: 1px solid #000; !important;/* Borda preta */
+  padding: 14px 35px; !important;
+  text-transform: uppercase; !important;
+  font-weight: 200; !important;
+  border-radius: 0; !important;
+  display: inline-block; !important;
+  font-size: 11px; !important;
+  letter-spacing: 1px; !important;
+}
+.btn-white:hover {
+  background: #000000; !important; /* Fundo preto no hover */
+  color: #fff; !important; /* Texto branco */
+  
 }
 
 .btn-solid-border {
@@ -603,7 +628,7 @@ input[type=email]:focus, input[type=password]:focus, input[type=text]:focus, inp
 
 .top-header .container {
   padding-top: 35px;
-  padding-bottom: 35px;
+  padding-bottom: 15px;
   border-bottom: 1px solid #dedede;
 }
 .top-header .dropdown-menu {
@@ -1951,8 +1976,8 @@ input[type=email]:focus, input[type=password]:focus, input[type=text]:focus, inp
 .account .block {
   background-color: #fff;
   border: 1px solid #dedede;
-  padding: 30px;
-  margin: 100px 0;
+  padding: 10px;
+  margin: 10px 0;
 }
 .account .block .logo {
   display: inline-block;
@@ -2350,12 +2375,20 @@ input[type=email]:focus, input[type=password]:focus, input[type=text]:focus, inp
 }
 
 .custom-pagination .page-link:hover {
-  background-color: #000000; /* Fundo cinza escuro ao passar o mouse */
-  color: #fff; /* Texto branco permanece */
+  background-color: #ffffff; /* Fundo cinza escuro ao passar o mouse */
+  color: #000000; /* Texto branco permanece */
+  border: 1px solid #000; /* Borda preta */
 }
 
 .custom-pagination .active .page-link {
   background-color: #fff; /* Fundo branco para a página ativa */
+  color: #000; /* Texto preto para a página ativa */
+  border: 1px solid #000; /* Borda preta */
+  font-weight: bold; /* Destaca o botão ativo */
+}
+
+.custom-pagination .active .page-link:hover {
+  background-color: #ffffff; /* Fundo branco para a página ativa */
   color: #000; /* Texto preto para a página ativa */
   border: 1px solid #000; /* Borda preta */
   font-weight: bold; /* Destaca o botão ativo */
@@ -2372,11 +2405,40 @@ input[type=email]:focus, input[type=password]:focus, input[type=text]:focus, inp
 
 .cart-notification {
   position: absolute;
-  top: -5px;
-  right: -10px;
-  background-color: red;
-  color: white;
-  border-radius: 50%;
-  padding: 5px 10px;
-  font-size: 12px;
+  top: -10px; /* Ajusta a posição para sobrescrito */
+  right: -10px; /* Mantém alinhado à direita */
+  background-color: red; /* Fundo da notificação */
+  color: white; /* Cor do texto */
+  border-radius: 50%; /* Deixa a notificação circular */
+  padding: 2px 5px; /* Reduz o tamanho do preenchimento */
+  font-size: 10px; /* Diminui o tamanho da fonte */
+  font-weight: bold; /* Deixa o texto mais legível */
+  width: 20px; /* Define a largura fixa */
+  height: 20px; /* Define a altura fixa */
+  display: flex; /* Garante centralização */
+  align-items: center; /* Alinha verticalmente o texto */
+  justify-content: center; /* Alinha horizontalmente o texto */
+}
+
+
+
+.myButton-std {
+	box-shadow:inset 0px 1px 0px 0px #566151;
+	background-color:#030502;
+	border:1px solid #3b6e22;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:13px;
+	font-weight:bold;
+	padding:6px 12px;
+	text-decoration:none;
+}
+.myButton-std:hover {
+	background-color:#406e23;
+}
+.myButton-std:active {
+	position:relative;
+	top:1px;
 }

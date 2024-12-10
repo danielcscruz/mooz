@@ -1,0 +1,53 @@
+{% extends "base_account.html" %}
+{% load i18n %}
+{% load allauth account %}
+{% block head_title %}
+    {% translate "Sign In" %}
+{% endblock head_title %}
+{% block content %}
+    {% element h1 %}
+        {% translate "Enter Sign-In Code" %}
+    {% endelement %}
+    {% setvar email_link %}
+        <a href="mailto:{{ email }}">{{ email }}</a>
+    {% endsetvar %}
+    {% element p %}
+        {% blocktranslate %}We’ve sent a code to {{ email_link }}. The code expires shortly, so please enter it soon.{% endblocktranslate %}
+    {% endelement %}
+<!-- Formulário para confirmar o código de login -->
+<form method="post" action="{% url 'account_confirm_login_code' %}">
+    {% csrf_token %}
+
+    <!-- Campos do formulário -->
+    <div class="form-fields">
+        {% for field in form %}
+            <div class="form-group">
+                {{ field }}
+                {% for error in field.errors %}
+                    <div class="error">{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+    
+    {{ redirect_field }}
+
+    <!-- Botão de envio -->
+    <div class="form-actions">
+        <button type="submit" class="btn btn-main btn-small">
+            {% translate "Sign In" %}
+        </button>
+    </div>
+</form>
+<hr>
+<!-- Botão para cancelar -->
+<button type="submit" form="logout-from-stage" class="btn btn-white btn-small">
+    {% translate "Cancel" %}
+</button>
+
+<!-- Formulário para logout -->
+<form id="logout-from-stage" method="post" action="{% url 'account_logout' %}">
+    <input type="hidden" name="next" value="{% url 'account_login' %}">
+    {% csrf_token %}
+</form>
+{% endblock content %}

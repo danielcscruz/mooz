@@ -26,11 +26,14 @@ def album_detail(request, album_cod):
     album = get_object_or_404(Album, album_cod=album_cod)
     fotos = album.fotos.all()
 
-    # Obter os IDs das fotos no carrinho do usuário logado
-    cart = request.user.carts.first()
+    # Inicializar variáveis para usuários não autenticados
     cart_item_ids = []
-    if cart:
-        cart_item_ids = list(cart.items.values_list('photo_id', flat=True))  # IDs das fotos no carrinho
+
+    # Se o usuário estiver autenticado, acessar o carrinho
+    if request.user.is_authenticated:
+        cart = request.user.carts.filter(status='active').first()
+        if cart:
+            cart_item_ids = list(cart.items.values_list('photo_id', flat=True))  # IDs das fotos no carrinho
 
     context = {
         'album': album,

@@ -1,35 +1,52 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
-    <h1>Seu Carrinho</h1>
-    {% if cart.items.exists %}
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Foto</th>
-                    <th>Album</th>
-                    <th>Código</th>
-                    <th>Preço Unitário</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in cart.items.all %}
-                <tr>
-                   <td><img src="{{ item.photo.imagem.url }}" alt="Imagem" style="max-width: 50px; height: auto;"></td>
-                    <td>{{ item.photo.album.album_nome }}</td>
-                    <td> {{ item.photo.album.album_cod }}-{{ item.photo.foto_id}}</td>
-                    <td>{{ item.price }}</td>
-                    <td>
-                        <a href="{% url 'remove_from_cart' item.photo.id %}?next={{ request.path }}" class="btn btn-danger">Remover</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <h3>Total: {{ cart.total_value }}</h3>
-    {% else %}
-        <p>Seu carrinho está vazio.</p>
-    {% endif %}
+    
+    <div class="row">
+        <!-- Colunas para o conteúdo atual -->
+        <div class="col-md-8">
+            <h2><center>Seus Itens</center></h2>
+            {% if cart.items.exists %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Foto</th>
+                            <th>Álbum</th>
+                            <th>Código</th>
+                            <th>Preço Unitário</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart.items.all %}
+                        <tr>
+                            <td><img src="{{ item.photo.imagem.url }}" alt="Imagem" style="max-width: 50px; height: auto;"></td>
+                            <td>{{ item.photo.album.album_nome }}</td>
+                            <td>{{ item.photo.album.album_cod }}-{{ item.photo.foto_id }}</td>
+                            <td>{{ item.price }}</td>
+                            <td>
+                                <a href="{% url 'remove_from_cart' item.photo.id %}?next={{ request.path }}" class="btn btn-white btn-small">Remover</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                
+            {% else %}
+                <p>Seu carrinho está vazio.</p>
+            {% endif %}
+        </div>
+
+        <!-- Coluna para novas informações -->
+        <div class="col-md-4">
+            <center><h2>Resumo</h2></center>
+                <center><h3>Total: {{ cart.total_value }}</h3></center>
+            <div class="text-right mb-3">
+                <center> <a href="" class="btn btn-main btn-small">Pagamento</a></center>
+             </div>
+            <!-- Adicione conteúdo adicional aqui -->
+        </div>
+    </div>
 </div>
+
 {% endblock %}

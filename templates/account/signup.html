@@ -1,14 +1,10 @@
-{% extends 'base.html' %}
+{% extends "base_account.html" %}
 {% load allauth i18n %}
 {% block head_title %}
     {% trans "Signup" %}
 {% endblock head_title %}
 {% block content %}
-<section class="signin-page account">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-                <div class="block text-center">
+
                     {% element h1 %}
                          {% trans "Sign Up" %}
                     {% endelement %}
@@ -21,35 +17,110 @@
                     {% element p %}
                         {% blocktranslate %} Já tem uma conta? Por favor,  {{ link }}acesse aqui{{ end_link }}.{% endblocktranslate %}
                     {% endelement %}
-                    {% if not SOCIALACCOUNT_ONLY %}
-                        {% url 'account_signup' as action_url %}
-                        {% element form form=form method="post" action=action_url tags="entrance,signup" %}
-                        {% slot body %}
-                            {% csrf_token %}
-                            {% element fields form=form unlabeled=True %}
-                            {% endelement %}
-                            {{ redirect_field }}
-                        {% endslot %}
-                        {% slot actions %}
-                            {% element button tags="prominent,signup" type="submit" %}
-                                {% trans "Sign Up" %}
-                                {% endelement %}
-                        {% endslot %}
-                            {% endelement %}
-                    {% endif %}
-                    {% if PASSKEY_SIGNUP_ENABLED %}
-                        {% element hr %}
-                        {% endelement %}
-                        {% element button href=signup_by_passkey_url tags="prominent,signup,outline,primary" %}
-                        {% trans "Sign up using a passkey" %}
-                        {% endelement %}
-                    {% endif %}
-                    {% if SOCIALACCOUNT_ENABLED %}
-                        {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
-                    {% endif %}          
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+                    <form method="post" action="{% url 'account_signup' %}" id="signup-form">
+                        {% csrf_token %}
+                        
+                        <!-- Campo de Email -->
+                        <div class="form-group">
+                            <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                            <input type="email" 
+                                   name="{{ form.email.html_name }}" 
+                                   id="{{ form.email.id_for_label }}" 
+                                   value="{{ form.email.value|default:'' }}" 
+                                   class="form-control" 
+                                   required>
+                        </div>
+                    
+                        <!-- Campo de Nome de Usuário -->
+                        <div class="form-group">
+                            <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+                            <input type="text" 
+                                   name="{{ form.username.html_name }}" 
+                                   id="{{ form.username.id_for_label }}" 
+                                   value="{{ form.username.value|default:'' }}" 
+                                   class="form-control" 
+                                   required>
+                        </div>
+                    
+                        <!-- Campo de Senha -->
+                        <div class="form-group">
+                            <label for="{{ form.password1.id_for_label }}">{{ form.password1.label }}</label>
+                            <input type="password" 
+                                   name="{{ form.password1.html_name }}" 
+                                   id="{{ form.password1.id_for_label }}" 
+                                   value="{{ form.password1.value|default:'' }}" 
+                                   class="form-control" 
+                                   required>
+                            <div id="password-error" style="color: red; display: none;"></div>
+                        </div>
+                    
+                        <!-- Campo de Confirmação de Senha -->
+                        <div class="form-group">
+                            <label for="{{ form.password2.id_for_label }}">{{ form.password2.label }}</label>
+                            <input type="password" 
+                                   name="{{ form.password2.html_name }}" 
+                                   id="{{ form.password2.id_for_label }}" 
+                                   value="{{ form.password2.value|default:'' }}" 
+                                   class="form-control" 
+                                   required>
+                            <div id="password2-error" style="color: red; display: none;"></div>
+                        </div>
+                    
+                        <button type="submit" id="submit-button" class="btn btn-main btn-small" disabled>
+                            {% trans "Sign Up" %}
+                        </button>
+                    </form>
+                    
+                    <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        const passwordField = document.getElementById("{{ form.password1.id_for_label }}");
+                        const password2Field = document.getElementById("{{ form.password2.id_for_label }}");
+                        const submitButton = document.getElementById("submit-button");
+                        const passwordError = document.getElementById("password-error");
+                        const password2Error = document.getElementById("password2-error");
+                    
+                        // Função de validação de senha
+                        function validatePassword() {
+                            const password = passwordField.value;
+                            const password2 = password2Field.value;
+                            let isValid = true;
+                    
+                            // Validação do comprimento mínimo da senha
+                            if (password.length < 8) {
+                                passwordError.textContent = "A senha deve ter pelo menos 8 caracteres.";
+                                passwordError.style.display = "block";
+                                isValid = false;
+                            } else {
+                                passwordError.style.display = "none";
+                            }
+                    
+                            // Validação de correspondência das senhas
+                            if (password !== password2) {
+                                password2Error.textContent = "As senhas não coincidem.";
+                                password2Error.style.display = "block";
+                                isValid = false;
+                            } else {
+                                password2Error.style.display = "none";
+                            }
+                    
+                            // Habilita o botão se todas as validações passarem
+                            submitButton.disabled = !isValid;
+                        }
+                    
+                        // Event listener para validação ao digitar
+                        passwordField.addEventListener("input", validatePassword);
+                        password2Field.addEventListener("input", validatePassword);
+                    });
+                    </script>
+                    
+
+                    
+
 {% endblock %}
+<!--
+<small>
+    Sua senha não pode ser muito parecida com o resto das suas informações pessoais
+    Sua senha precisa conter pelo menos 8 caracteres.
+    Sua senha não pode ser uma senha comumente utilizada.
+    Sua senha não pode ser inteiramente numérica.
+    </small> -->

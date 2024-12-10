@@ -1,0 +1,57 @@
+{% extends "base_account.html" %}
+{% load i18n %}
+
+{% load allauth account %}
+{% block head_title %}
+    {% translate "Sign In" %}
+{% endblock head_title %}
+{% block content %}
+    {% element h1 %}
+        {% translate "Mail me a sign-in code" %}
+    {% endelement %}
+    {% element p %}
+        {% blocktranslate %}You will receive an email containing a special code for a password-free sign-in.{% endblocktranslate %}
+    {% endelement %}
+<!-- Formulário para solicitar o código de login -->
+<form method="post" action="{% url 'account_request_login_code' %}">
+    {% csrf_token %}
+
+    <!-- Campos do formulário -->
+
+    <div class="form-fields">
+        {% for field in form %}
+            <div class="form-group">
+                <!-- {{ field }}-->
+                <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                <input type="email" 
+                       name="{{ form.email.html_name }}" 
+                       id="{{ form.email.id_for_label }}" 
+                       value="{{ form.email.value|default:'' }}" 
+                       class="form-control" 
+                       required>
+                {% for error in field.errors %}
+                    <div class="error">{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+
+
+    {{ redirect_field }}
+
+    <!-- Botão de envio -->
+    <div class="form-actions">
+        <button type="submit" class="btn btn-main btn-small">
+            {% translate "Request Code" %}
+        </button>
+    </div>
+</form>
+
+<!-- Link para outras opções de login -->
+{% element hr %}
+{% endelement %}
+<a href="{% url 'account_login' %}" class="btn btn-white btn-small">
+    {% translate "Other sign-in options" %}
+</a>
+
+{% endblock content %}

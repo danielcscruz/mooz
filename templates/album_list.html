@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div class="container">
-    {% if request.user.is_authenticated and request.user.is_photographer %}
-<div class="text-right mb-3">
-   <center> <a href="{% url 'new_album' %}" class="btn btn-main btn-small">Criar Novo Álbum</a></center>
-</div>
-{% endif %}
 
     <div class="container bootstrap snippets bootdey">
+        <div class="container">
+            {% if request.user.is_authenticated and request.user.is_photographer %}
+        <div class="text-right mb-3">
+           <center> <a href="{% url 'new_album' %}" class="btn btn-white btn-small">Criar Novo Álbum</a></center>
+        </div>
+        {% endif %}
          <!-- Controles de Paginação -->
           
     <div class="pagination-wrapper text-center">
@@ -54,7 +54,7 @@
                             <p></p>
                         <a href="{% url 'album_detail' album.album_cod %}" class="btn btn-main btn-small">ver</a>
                         {% if request.user in album.edit_permissions.all %}
-                        <a href="{% url 'edit_album' album.album_cod %}" class="btn btn-main btn-small">Editar</a>
+                        <a href="{% url 'edit_album' album.album_cod %}" class="btn btn-white btn-small">Editar</a>
                     {% endif %}
                     </div>
                 </div>

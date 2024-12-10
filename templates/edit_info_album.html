@@ -17,7 +17,9 @@
     
                 <center> Nome do album</center>
                 <p>
-                    <input id="description" name="title" value="{{ album.album_nome }}">{{ album.title }}</input>
+                    <div class="form-group">
+                    <input id="description" name="title" value="{{ album.album_nome }}" class="form-control" >{{ album.title }}</input>
+                    </div>
                 </p>
                 
                 <center> Local</center>
@@ -45,7 +47,8 @@
 
             <form method="POST" id="my-dropzone"  enctype="multipart/form-data" action="{% url 'delete_album' album.album_cod %}">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-main btn-small" data-bs-toggle="modal" data-bs-target="#deleteModal">Excluir Álbum</button>
+                <button type="submit" class="btn btn-white btn-small" data-bs-toggle="modal" data-bs-target="#deleteModal">Excluir Álbum</button>
+                <br><br><br><br>
             </form>
         </div>
     </div>
@@ -66,7 +69,8 @@
                 <!-- Formulário para confirmar a exclusão -->
                 <form method="POST" action="{% url 'delete_album' album.album_cod %}">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-danger">Excluir</button>
+                    <button type="submit" class="btn btn-main btn-small">Excluir</button>
+                    
                 </form>
             </div>
         </div>

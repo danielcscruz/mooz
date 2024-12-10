@@ -30,30 +30,23 @@
 
 <body id="body">
 
+
   <!-- Start Top Header Bar -->
   <section class="top-header">
     <div class="container">
       <div class="row">
 
-        <!-- Left Section (Empty for now) -->
-        <div class="col-md-4 col-xs-12 col-sm-4"></div>
-
-        <!-- Logo Section -->
+        <!-- Left Section -->
         <div class="col-md-4 col-xs-12 col-sm-4">
-          <div class="logo text-center">
-            <a href="/">
-              <svg width="135px" height="29px" viewBox="0 0 155 29" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                <g id="Page-1" stroke="none" fill="none" font-size="40" font-family="AustinBold, Austin" font-weight="bold">
-                  <g id="Group" transform="translate(-108.000000, -297.000000)" fill="#000000">
-                    <text id="AVIATO">
-                      <tspan x="108.94" y="325">ZUM</tspan>
-                    </text>
-                  </g>
-                </g>
-              </svg>
-            </a>
-          </div>
+          <div class="logo text-left">
+            <img src="{% static 'img/clicado_logo8.png' %}"  style="max-width: 150px; height: auto;" >
+            </div>
         </div>
+
+				<!-- center (empty) -->
+        <div class="col-md-4 col-xs-12 col-sm-4">
+
+         </div> 
 
         <div class="col-md-4 col-xs-12 col-sm-4">
           <ul class="top-menu text-right list-inline">
@@ -74,31 +67,12 @@
                   {% endif %}
               </li>
           </ul>
-      </div>
-      
-      
-        <!-- Back up nav
-
-        <div class="col-md-4 col-xs-12 col-sm-4">
-          <ul class="top-menu text-right list-inline">
-            <a href="{% url 'view_cart' %}"><i class="tf-ion-android-cart"></i> carrinho</a>
-            <li class="dropdown search dropdown-slide">
-              {% if user.is_authenticated %}
-              <a href="{% url 'profile' %}"><i class="tf-ion-ios-person"></i> {{ user.username }}</a>
-              {% url 'account_logout' as logout_url_ %}
-              <a href="{{ logout_url_ }}">sair</a>
-              {% else %}
-              {% url 'account_login' as login_url_ %}
-              <a href="{{ login_url_ }}"><i class="tf-ion-ios-person-outline"></i> entrar </a>
-              {% endif %}
-            </li>
-          </ul>
-        </div> -->
-
-      </div>
+      </div> 
+  
     </div>
-  </section>
-  <!-- End Top Header Bar -->
+  </div>
+</section>
+  <!-- End Top Header Bar --> 
 
   <!-- Main Menu Section -->
   <section class="menu">
@@ -113,7 +87,7 @@
         </div>
       </div>
     </nav>
-  </section>
+  </section> 
 
   <!-- Main Content Section -->
   <main>
@@ -170,23 +144,6 @@
   <script src="{% static 'plugins/jquery/dist/jquery.min.js' %}"></script>
   <script src="{% static 'plugins/bootstrap/js/bootstrap.min.js' %}"></script>
   
-  <script>
-      $(document).ready(function() {
-          // Script para carregar a imagem no modal ao clicar na miniatura
-          $('.open-image-modal').on('click', function (event) {
-              var imageUrl = $(this).data('image');  // Obtém a URL da imagem da miniatura
-              $('#globalImageModal').find('#modalImage').attr('src', imageUrl);  // Atualiza a imagem no modal
-          });
-  
-          // Quando o modal for fechado, limpar a imagem
-          $('#globalImageModal').on('hidden.bs.modal', function () {
-              $(this).find('#modalImage').attr('src', '');  // Limpa o src da imagem para evitar problemas ao reabrir
-          });
-  
-          // Verificar se o jQuery e Bootstrap estão carregados corretamente
-          console.log("jQuery e Bootstrap carregados com sucesso.");
-      });
-  </script>
   {% endblock %}
   
 </body>
